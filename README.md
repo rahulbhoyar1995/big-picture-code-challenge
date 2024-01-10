@@ -1,57 +1,144 @@
-# Big Picture Coding Challenge - Backend - Book Library API
+# Big Picture Books Database
 
-**To work on this challenge, please create a fork of it to your own github account**
+**Author : Rahul Rajkumar Bhoyar**
 
-Our colleagues have amassed an impressive collection of books, leading to quite the bill and an unhappy boss. To keep things organized and to provide transparency into our library, we've decided to step in and help with software. Our solution: a sleek website where our intern can easily record books by their ISBN number, pulling in detailed information via an API.
+**Date : 10/01/2023**
 
-**Your mission**: Build the backend to power this application.
+The Big Picture Books Database is a Django web application that manages information about books, including details such as titles, authors, ISBNs, and more. The application consists of a front-end component for user interaction and a REST API for accessing book data programmatically.
 
-## Overview:
+## Table of Contents
 
-- Users (in this case, our intern) can enter the ISBN number of a book.
-- Our software will fetch the book's details from an external API and save it to our database.
-- The frontend will then display our entire library in a user-friendly manner.
+- [Requirements Specification](#tech-stack)
+- [Tech Stack](#purpose)
+- [How Errors ared Handled](#error-handling)
 
-## Backend Specifications:
+  - [Front End](#front-end)
+  - [Back End](#back-end)
+    - [Example Error Levels](#example-error-levels)
+  - [Swagger Documentation](#swagger-documentation)
+- [Getting Started](#getting-started)
 
-### Technology:
+  - [Prerequisites](#prerequisites)
+  - [Installation](#installation)
+- [Running the Application](#running-the-application)
 
-- Python (Any backend framework of your choice. E.g., Flask, Django, FastAPI, etc.)
-- ORM + Database: Feel free to choose what you're comfortable with (SQLite, PostgreSQL, MongoDB, etc.)
+  - [Django Front-end App](#django-front-end-app)
+  - [REST API App with Swagger](#rest-api-app-with-swagger)
+- [Testing](#testing)
+- Note
 
-### Features:
+## Requirements Specification
 
-1. **ISBN Validation**:
-    - The backend should be able to validate an ISBN number.
-    - If the ISBN is not valid, it should send an appropriate response to the frontend.
+The objective is to develop a back-end application capable of retrieving book information from third-party APIs and storing it in our local database. The Big Picture Books Database serves as a comprehensive platform for managing and accessing book-related data. It encompasses a user-friendly front-end, facilitating interactive use, and a REST API, enabling programmatic access to book data from the back-end. This versatility makes it suitable for various use cases, ranging from personal book tracking to seamless integration with other systems.
 
-2. **Fetch Book Details**:
-    - The backend should get book details like author, title, summary, and cover URL from a third-party API.
-    - Hint: Check out [OpenLibrary's API](https://openlibrary.org/). It's free and provides detailed information on books by ISBN.
+## Tech Stack
 
-3. **Endpoints**:
+- **Django**:   Web framework for building the back-end.
+- **Django REST Framework**:  Toolkit for building Web APIs.
+- **DRF-YASG**:  Yet Another Swagger Generator for generating Swagger/OpenAPI documentation.
+- **Swagger UI**:  Interactive API documentation.
+- **HTML, CSS, JavaScript**:  Used for the front-end user interface.
+- **SQLite**:   Default database used for development.
 
-    - **Task 1**: Fetch Book Details by ISBN
+## How Errors are Handled
 
-      `GET /isbn/<isbn>`:
-      - Returns a JSON including: author, title, summary, cover_url.
+### Front End
 
-    - **Task 2**: Save Book Details to our Library
+The front-end application is designed with user experience in mind, and error handling is implemented to ensure that users receive clear and informative feedback. Common error scenarios, such as invalid input or failed API requests, are gracefully handled with user-friendly messages.
 
-      `POST /books` with body `JSON: {isbn: "ISBN_NUMBER_HERE"}`:
-      - This will save the book's details to our library database.
+### Back End
 
-    - **Task 3**: List All Books in our Library
+The back-end API employs robust error handling to ensure reliable communication with clients. Different levels of errors are distinguished and communicated through the API responses. The [HTTP status codes](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status) are used to indicate the success or failure of an API request. Additionally, detailed error messages are provided in the response to aid developers in identifying and resolving issues.
 
-      `GET /books`:
-      - Returns a list of all books stored in our library.
-      - Use a format, so the fronend can render all information from this one JSON
+#### Example Error Levels:
 
-## Documentation:
+1.**Client-Side Validation Errors (400 Bad Request):**
 
-Please ensure that you document your code adequately. Proper commenting will not only help you in future modifications but will also assist any other developer who might be working with your code.
+- Invalid input parameters.
+- Missing required fields.
+- Validation errors on the client side.
 
-## Installation
-*Please tell us how to get your code running. Do we need to install anything? Is there a database we need to create? Please provide all necessary instructions. After following these instructions the code should run!*
+2.**Server-Side Validation Errors (422 Unprocessable Entity):**
 
-Good luck, and may your code run without bugs!
+- Validation errors detected on the server side.
+
+3.**Server Errors (5xx Server Error):**
+
+- Unhandled server-side exceptions.
+- Issues that need attention from the development team.
+
+### Swagger Documentation
+
+The Swagger documentation for the API provides detailed information about each endpoint, including expected request parameters, response formats, and possible error scenarios. Developers can refer to the Swagger UI for interactive exploration and testing of the API.
+
+### Prerequisites
+
+- Python 3.x
+- Other dependencies (install using `pip install -r requirements.txt`
+
+### Installation
+
+1. Clone the repository
+
+   ```bash
+   git clone https://github.com/rahulbhoyar1995/big-picture-code-challenge.git
+   ```
+2. Navigating to Directory
+
+```bash
+    cd big-picture-code-challenge/big_picture_book_library
+```
+
+3. Install dependencies
+
+   ```bash
+   pip install -r requirements.txt
+   ```
+4. Create migration files based on models
+
+   ```bash
+   python manage.py makemigrations
+   ```
+5. Apply migrations to set up the database
+
+   ```bash
+   python manage.py migrate
+   ```
+
+## Running the Application
+
+### Django Front-end App (Front-end/clide side application)
+
+1. Start the Django development server:
+
+```bash
+python manage.py runserver
+```
+
+2. Access the front-end app in your web browser :      [http://127.0.0.1:8000/]()
+
+### REST API App with Swagger (Back-end/server-side application)
+
+1. Start the Django development server for the API:
+
+```bash
+python manage.py runserver
+```
+
+2. Access the Swagger documentation in your web browser :      [http://127.0.0.1:8000/swagger/]()
+
+## Testing
+
+Run the tests using the following command:
+
+```bash
+python manage.py test
+```
+
+## Note
+
+Please let me know if any modification or improvement is needed.
+
+Rahul Bhoyar
+
+rahulbhoyaroffice@gmail.com
