@@ -143,6 +143,7 @@ def validate_response(response, isbn, api_url):
     the first book in the list if it meets the expected structure. If any issues are
     encountered, an error dictionary is returned with details about the problem.
     """
+  
     if response.status_code != 200:
         # Handle HTTP error responses
         return {
@@ -153,7 +154,6 @@ def validate_response(response, isbn, api_url):
             'issue_with_isbn': isbn,
             'api_url': api_url
         }
-
     response_data = response.json()
 
     if not isinstance(response_data, dict):
@@ -281,7 +281,6 @@ def fetch_book_data(isbn):
     api_url = f"https://openlibrary.org/search.json?isbn={isbn}"
     response = requests.get(api_url)
     first_book = validate_response(response, isbn, api_url)
-
     if "error" in first_book.keys():
         return first_book
 
@@ -504,11 +503,16 @@ def index(request):
 
     if request.method == 'POST':
         isbn_number = request.POST.get('search_query')
+        
+        if not validate_isbn(isbn_number):
+            context = isbn_invalidation_error_response(isbn_number, "get")
+            return render(request, 'app/book_details.html', context)
+        
         if validate_isbn(isbn_number):
             response = fetch_book_data(isbn_number)
             request.session['context'] = response
             return render(request, 'app/book_details.html', request.session['context'])
-
+        
     return render(request, 'app/index.html', context)
 
 
