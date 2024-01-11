@@ -73,9 +73,16 @@ class ISBNDetailViewTest(TestCase):
         self.assertEqual(response.data['title'], 'Little Women')
 
 
-    def test_invalid_isbn_detail(self):
+    def test_invalid_isbn_detail_1(self):
         """Test fetching details for an invalid ISBN."""
-        response = self.client.get(reverse('app:isbn_detail', args=['invalid_isbn']))
+        invalid_isbn = "sjdvcjshdcvsdycvgsik"
+        response = self.client.get(reverse('app:isbn_detail', args=[invalid_isbn]))
+        self.assertEqual(response.status_code, 400)
+        
+    def test_invalid_isbn_detail_2(self):
+        """Test fetching details for an valid ISBN but it does not exist"""
+        non_existent_valid_isbn = "9788171822125"
+        response = self.client.get(reverse('app:isbn_detail', args=[non_existent_valid_isbn]))
         self.assertEqual(response.status_code, 400)
 
 
